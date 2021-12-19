@@ -5,7 +5,6 @@ import commonMiddleware from '../lib/commonMiddleware';
 import { getAuctionById } from './getAuction';
 import placeBidSchema from '../lib/schemas/placeBidSchema';
 
-
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 async function placeBid(event, context) {
@@ -19,7 +18,9 @@ async function placeBid(event, context) {
   }
 
   if (amount <= auction.highestBid.amount) {
-    throw new createError.Forbidden(`The bid must be higher than ${auction.highestBid.amount}!`);
+    throw new createError.Forbidden(
+      `The bid must be higher than ${auction.highestBid.amount}!`,
+    );
   }
 
   const params = {
@@ -27,9 +28,9 @@ async function placeBid(event, context) {
     Key: { id },
     UpdateExpression: 'set highestBid.amount = :amount',
     ExpressionAttributeValues: {
-      ':amount': amount
+      ':amount': amount,
     },
-    ReturnValues: 'ALL_NEW'
+    ReturnValues: 'ALL_NEW',
   };
 
   let updatedAuction;
@@ -48,10 +49,11 @@ async function placeBid(event, context) {
   };
 }
 
-export const handler = commonMiddleware(placeBid)
-  .use(validator({
+export const handler = commonMiddleware(placeBid).use(
+  validator({
     inputSchema: placeBidSchema,
     ajvOptions: {
-      strict: false
-    }
-  }));
+      strict: false,
+    },
+  }),
+);

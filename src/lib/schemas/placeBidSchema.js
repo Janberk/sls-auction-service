@@ -5,17 +5,13 @@ const schema = {
       type: 'object',
       properties: {
         amount: {
-          type: 'number'
-        }
+          type: 'number',
+        },
       },
-      required: [
-        'amount'
-      ]
-    }
+      required: ['amount'],
+    },
   },
-  required: [
-    'queryStringParameters'
-  ]
+  required: ['queryStringParameters'],
 };
 
 export default schema;

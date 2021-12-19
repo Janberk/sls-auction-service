@@ -18,11 +18,11 @@ async function getAuctions(event) {
     IndexName: 'statusAndEndDate',
     KeyConditionExpression: '#status = :status',
     ExpressionAttributeValues: {
-      ':status': status
+      ':status': status,
     },
     ExpressionAttributeNames: {
-      '#status': 'status'
-    }
+      '#status': 'status',
+    },
   };
 
   try {
@@ -40,11 +40,12 @@ async function getAuctions(event) {
   };
 }
 
-export const handler = commonMiddleware(getAuctions)
-  .use(validator({
+export const handler = commonMiddleware(getAuctions).use(
+  validator({
     inputSchema: getAuctionsSchema,
     ajvOptions: {
       useDefaults: true,
-      strict: false
-    }
-  }));
+      strict: false,
+    },
+  }),
+);

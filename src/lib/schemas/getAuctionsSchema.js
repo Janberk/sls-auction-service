@@ -7,14 +7,12 @@ const schema = {
         status: {
           type: 'string',
           enum: ['OPEN', 'CLOSED'],
-          default: 'OPEN'
-        }
-      }
-    }
+          default: 'OPEN',
+        },
+      },
+    },
   },
-  required: [
-    'queryStringParameters'
-  ]
+  required: ['queryStringParameters'],
 };
 
 export default schema;

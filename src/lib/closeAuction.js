@@ -11,8 +11,8 @@ export async function closeAuction(auction) {
       ':status': 'CLOSED',
     },
     ExpressionAttributeNames: {
-      '#status': 'status'
-    }
+      '#status': 'status',
+    },
   };
 
   const result = await dynamodb.update(params).promise();

@@ -20,15 +20,17 @@ async function createAuction(event, context) {
     createdAt: now.toISOString(),
     endingAt: endDate.toISOString(),
     highestBid: {
-      amount: 0
-    }
+      amount: 0,
+    },
   };
 
   try {
-    await dynamodb.put({
-      TableName: process.env.AUCTIONS_TABLE_NAME,
-      Item: auction
-    }).promise();
+    await dynamodb
+      .put({
+        TableName: process.env.AUCTIONS_TABLE_NAME,
+        Item: auction,
+      })
+      .promise();
   } catch (error) {
     console.error(error);
     throw new createError.InternalServerError(error);
@@ -40,10 +42,11 @@ async function createAuction(event, context) {
   };
 }
 
-export const handler = commonMiddleware(createAuction)
-  .use(validator({
+export const handler = commonMiddleware(createAuction).use(
+  validator({
     inputSchema: createAuctionSchema,
     ajvOptions: {
-      strict: false
-    }
-  }));
+      strict: false,
+    },
+  }),
+);

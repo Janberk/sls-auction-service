@@ -11,11 +11,11 @@ export async function getEndedAuctions() {
     KeyConditionExpression: '#status = :status AND endingAt <= :now',
     ExpressionAttributeValues: {
       ':status': 'OPEN',
-      ':now': now.toISOString()
+      ':now': now.toISOString(),
     },
     ExpressionAttributeNames: {
-      '#status': 'status'
-    }
+      '#status': 'status',
+    },
   };
 
   const result = await dynamodb.query(params).promise();

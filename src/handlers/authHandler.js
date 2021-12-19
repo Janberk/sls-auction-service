@@ -30,7 +30,9 @@ exports.handler = async (event, context, callback) => {
   const condition = {};
   condition.IpAddress = {};
 
-  if (event.authorizationToken === 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkNhbmJlcmsgRGVtaXJrYW4iLCJlbWFpbCI6ImNkbkBkYXNidXJvLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.LA5BssHmSUWj5j-Jzv62cOzfmU7DoMo76a4gY7SQx40'
+  if (
+    event.authorizationToken ===
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkNhbmJlcmsgRGVtaXJrYW4iLCJlbWFpbCI6ImNkbkBkYXNidXJvLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.LA5BssHmSUWj5j-Jzv62cOzfmU7DoMo76a4gY7SQx40'
     // && queryStringParameters.QueryString1 === 'queryValue1'
     // && stageVariables.StageVar1 === 'stageValue1'
   ) {
@@ -69,7 +71,6 @@ exports.handler = async (event, context, callback) => {
   // context.user = { user: 'test' };
   // context.succeed(authPolicy.build());
 
-
   // const policyDocument = {
   //   principalId: 'test',
   //   policyDocument: {
@@ -106,7 +107,7 @@ const generatePolicy = (principalId, effect, resource) => {
   }
   // Optional output with custom properties of the String, Number or Boolean type.
   authResponse.context = {
-    user: principalId
+    user: principalId,
   };
 
   return authResponse;

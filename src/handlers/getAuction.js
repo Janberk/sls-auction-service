@@ -8,10 +8,12 @@ export async function getAuctionById(id) {
   let auction;
 
   try {
-    const result = await dynamodb.get({
-      TableName: process.env.AUCTIONS_TABLE_NAME,
-      Key: { id }
-    }).promise();
+    const result = await dynamodb
+      .get({
+        TableName: process.env.AUCTIONS_TABLE_NAME,
+        Key: { id },
+      })
+      .promise();
 
     auction = result.Item;
   } catch (error) {
