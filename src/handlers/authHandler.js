@@ -107,7 +107,7 @@ const generatePolicy = (principalId, effect, resource) => {
   }
   // Optional output with custom properties of the String, Number or Boolean type.
   authResponse.context = {
-    user: principalId,
+    email: principalId,
   };
 
   return authResponse;
