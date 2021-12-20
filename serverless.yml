@@ -11,6 +11,9 @@ custom:
   AuctionsTable:
     name: !Ref AuctionsTable
     arn: !GetAtt AuctionsTable.Arn
+  MailQueue:
+    arn: ${cf:notification-service-${self:provider.stage}.MailQueueArn}
+    url: ${cf:notification-service-${self:provider.stage}.MailQueueUrl}
 
 provider:
   name: aws
@@ -21,8 +24,10 @@ provider:
   stage: ${opt:stage, 'dev'}
   environment:
     AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name}
+    MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
   iamRoleStatements:
     - ${file(iam/AuctionsTableIAM.yml):AuctionsTableIAM}
+    - ${file(iam/MailQueueIAM.yml):MailQueueIAM}
 
 resources:
   Resources:
@@ -35,6 +40,11 @@ functions:
       - http:
           method: POST
           path: /auction
+          authorizer:
+            name: authHandler
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token
   getAuctions:
     handler: src/handlers/getAuctions.handler
     events:
@@ -63,6 +73,11 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/bid
+          authorizer:
+            name: authHandler
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token
   processAuctions:
     handler: src/handlers/processAuctions.handler
     # events:
