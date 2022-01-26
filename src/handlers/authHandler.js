@@ -1,4 +1,4 @@
-exports.handler = async (event, callback) => {
+exports.handler = async (event, context, callback) => {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
   // Retrieve request parameters from the Lambda function input:
