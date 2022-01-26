@@ -18,7 +18,7 @@ custom:
     name: auctions-bucket-oiejurwqhgj-${self:provider.stage}
   CustomAuthorizerDef:
     name: authHandler
-    resultTtlInSeconds: 600
+    resultTtlInSeconds: 180
     identitySource: method.request.header.Authorization
     type: token  
 
