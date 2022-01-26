@@ -48,7 +48,7 @@ functions:
           path: /auction
           authorizer:
             name: authHandler
-            resultTtlInSeconds: 0
+            resultTtlInSeconds: 600
             identitySource: method.request.header.Authorization
             type: token
   getAuctions:
@@ -59,7 +59,7 @@ functions:
           path: /auctions
           authorizer:
             name: authHandler
-            resultTtlInSeconds: 0
+            resultTtlInSeconds: 600
             identitySource: method.request.header.Authorization
             type: token
   getAuction:
@@ -70,7 +70,7 @@ functions:
           path: /auction/{id}
           authorizer:
             name: authHandler
-            resultTtlInSeconds: 0
+            resultTtlInSeconds: 600
             identitySource: method.request.header.Authorization
             type: token
   placeBid:
@@ -81,7 +81,7 @@ functions:
           path: /auction/{id}/bid
           authorizer:
             name: authHandler
-            resultTtlInSeconds: 0
+            resultTtlInSeconds: 600
             identitySource: method.request.header.Authorization
             type: token
   processAuctions:
@@ -96,7 +96,7 @@ functions:
           path: /auction/{id}/picture
           authorizer:
             name: authHandler
-            resultTtlInSeconds: 0
+            resultTtlInSeconds: 600
             identitySource: method.request.header.Authorization
             type: token
 
