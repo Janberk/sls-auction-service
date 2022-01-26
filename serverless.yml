@@ -16,6 +16,11 @@ custom:
     url: ${cf:notification-service-${self:provider.stage}.MailQueueUrl}
   AuctionsBucket:
     name: auctions-bucket-oiejurwqhgj-${self:provider.stage}
+  CustomAuthorizerDef:
+    name: authHandler
+    resultTtlInSeconds: 600
+    identitySource: method.request.header.Authorization
+    type: token  
 
 provider:
   name: aws
@@ -46,44 +51,28 @@ functions:
       - http:
           method: POST
           path: /auction
-          authorizer:
-            name: authHandler
-            resultTtlInSeconds: 600
-            identitySource: method.request.header.Authorization
-            type: token
+          authorizer: ${self:custom.CustomAuthorizerDef}
   getAuctions:
     handler: src/handlers/getAuctions.handler
     events:
       - http:
           method: GET
           path: /auctions
-          authorizer:
-            name: authHandler
-            resultTtlInSeconds: 600
-            identitySource: method.request.header.Authorization
-            type: token
+          authorizer: ${self:custom.CustomAuthorizerDef}
   getAuction:
     handler: src/handlers/getAuction.handler
     events:
       - http:
           method: GET
           path: /auction/{id}
-          authorizer:
-            name: authHandler
-            resultTtlInSeconds: 600
-            identitySource: method.request.header.Authorization
-            type: token
+          authorizer: ${self:custom.CustomAuthorizerDef}
   placeBid:
     handler: src/handlers/placeBid.handler
     events:
       - http:
           method: PATCH
           path: /auction/{id}/bid
-          authorizer:
-            name: authHandler
-            resultTtlInSeconds: 600
-            identitySource: method.request.header.Authorization
-            type: token
+          authorizer: ${self:custom.CustomAuthorizerDef}
   processAuctions:
     handler: src/handlers/processAuctions.handler
     # events:
@@ -94,11 +83,7 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/picture
-          authorizer:
-            name: authHandler
-            resultTtlInSeconds: 600
-            identitySource: method.request.header.Authorization
-            type: token
+          authorizer: ${self:custom.CustomAuthorizerDef}
 
   authHandler:
     handler: src/handlers/authHandler.handler
