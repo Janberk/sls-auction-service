@@ -32,10 +32,11 @@ exports.handler = async (event, context, callback) => {
     // callback(null, generateAllow('cdn@dasburo.com', event.methodArn));
     callback(
       null,
-      generateAllow(
-        'cdn@dasburo.com',
+      generateAllow('cdn@dasburo.com', [
         'arn:aws:execute-api:eu-central-1:543059936291:zuyxl6uhk6/dev/GET/*',
-      ),
+        'arn:aws:execute-api:eu-central-1:543059936291:zuyxl6uhk6/dev/POST/*',
+        'arn:aws:execute-api:eu-central-1:543059936291:zuyxl6uhk6/dev/PATCH/*',
+      ]),
     );
   } else {
     callback('Unauthorized');
