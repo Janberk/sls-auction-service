@@ -4,4 +4,6 @@ Udemy Serverless Course Demo Project
 
 # Serverless Deployment
 
-sls deploy -v --profile sls-course
+sls deploy --profile sls-course
+
+sls deploy function -f <function> --profile sls-course
