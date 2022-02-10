@@ -6,6 +6,7 @@ AuctionsTableIAM:
     - dynamodb:PutItem
     - dynamodb:UpdateItem
     - dynamodb:Query
+    - dynamodb:BatchWriteItem
   Resource:
     - ${self:custom.AuctionsTable.arn}
     - !Join [

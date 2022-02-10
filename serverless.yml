@@ -20,7 +20,7 @@ custom:
     name: authHandler
     resultTtlInSeconds: 180
     identitySource: method.request.header.Authorization
-    type: token  
+    type: token
 
 provider:
   name: aws
@@ -83,6 +83,13 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/picture
+          authorizer: ${self:custom.CustomAuthorizerDef}
+  batchWriteAuctions:
+    handler: src/handlers/batchWriteAuctions.handler
+    events:
+      - http:
+          method: POST
+          path: /batchwriteauctions
           authorizer: ${self:custom.CustomAuthorizerDef}
 
   authHandler:

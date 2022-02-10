@@ -11,8 +11,6 @@ async function getAuctions(event) {
 
   console.log('Received from authorizer', event.requestContext.authorizer);
 
-  let auctions;
-
   const params = {
     TableName: process.env.AUCTIONS_TABLE_NAME,
     IndexName: 'statusAndEndDate',
@@ -25,10 +23,15 @@ async function getAuctions(event) {
     },
   };
 
-  try {
-    const result = await dynamodb.query(params).promise();
+  let auctions = [];
+  let response;
 
-    auctions = result.Items;
+  try {
+    do {
+      response = await dynamodb.query(params).promise();
+      response.Items.forEach((item) => auctions.push(item));
+      params.ExclusiveStartKey = response.LastEvaluatedKey;
+    } while (typeof response.LastEvaluatedKey !== 'undefined');
   } catch (error) {
     console.error(error);
     throw new createError.InternalServerError(error);
@@ -36,7 +39,7 @@ async function getAuctions(event) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(auctions),
+    body: JSON.stringify(auctions.length),
   };
 }
 
